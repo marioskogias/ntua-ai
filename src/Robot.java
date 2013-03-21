@@ -37,6 +37,10 @@ public class Robot implements Cloneable {
 		}
 	}
 
+	public void go_to_point(int x,int y) {
+		this.posX = x;
+		this.posY = y;
+	}
 	public int canMove(int direction) {
 		switch (direction) {
 		case 1: // 1 de3ia
@@ -75,28 +79,28 @@ public class Robot implements Cloneable {
 	
 	public int checkFound() {
 		int i;
-		for (i=1;i<4 && (posX+i)<limX;i++) { //de3ia
+		for (i=0;i<4 && (posX+i)<limX;i++) { //de3ia
 			if (place[posY][posX + i] == 'X')
 				break;
 			if (place[posY][posX+i] == 'T')
 				return 1;
 		}
 		
-		for (i=1;i<4 && (posX-i)<limX;i++) { //aristera
+		for (i=0;i<4 && (posX-i)>=0;i++) { //aristera
 			if (place[posY][posX - i] == 'X')
 				break;
 			if (place[posY][posX -i] == 'T')
 				return 1;
 		}
 		
-		for (i=1;i<4 && (posY+i)<limY;i++) { //panw
+		for (i=0;i<4 && (posY+i)<limY;i++) { //panw
 			if (place[posY+i][posX] == 'X')
 				break;
 			if (place[posY+i][posX] == 'T')
 				return 1;
 		}
 		
-		for (i=1;i<4 && (posY-i)<limY;i++) { //de3ia
+		for (i=0;i<4 && (posY-i)>=0;i++) { //de3ia
 			if (place[posY-i][posX] == 'X')
 				break;
 			if (place[posY-i][posX] == 'T')

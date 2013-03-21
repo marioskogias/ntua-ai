@@ -1,7 +1,7 @@
 4 4
 0 0
 4 4
-OXOO
+OOOO
 OXXO
 OXXO
 OOOT

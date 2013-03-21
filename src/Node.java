@@ -5,6 +5,8 @@ public class Node implements Comparable<Node>{
 	int cost_so_far;
 	int left_to_reach;
 	int overall_cost;
+	int posX;
+	int posY;
 	ArrayList<Node> children;
 
 

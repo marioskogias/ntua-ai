@@ -9,6 +9,8 @@ public class Robot implements Cloneable {
 	int limX;
 	int limY;
 	int velocity;
+	int prevX;
+	int prevY;
 	char[][] place; // to epipedo ergasias
 
 	public void move(int direction) {
@@ -25,12 +27,12 @@ public class Robot implements Cloneable {
 			break;
 		case 3: // 3 katw
 			place[posY][posX] = 'O';
-			posX = posY + velocity;
+			posY = posY + velocity;
 			place[posY][posX] = this.name;
 			break;
 		case 4: // 4 panw
 			place[posY][posX] = 'O';
-			posX = posY - velocity;
+			posY = posY - velocity;
 			place[posY][posX] = this.name;
 			break;
 

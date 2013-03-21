@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.PriorityQueue;
 
 public class Main {
 
@@ -9,7 +10,10 @@ public class Main {
 	 */
 	int limX;
 	int limY;
+	int tarX;
+	int tarY;
 	char[][] place; // to epipedo ergasias
+	
 
 	public static void main(String[] args) {
 
@@ -61,13 +65,15 @@ public class Main {
 		}
 
 		// start the procedure
-		System.out.println(me.canMove(1));
-		System.out.println(me.canMove(2));
-		System.out.println(me.canMove(3));
-		System.out.println(me.canMove(4));
-		me.move(3);
-		System.out.println("done the move");
-		System.out.println(me.checkFound());
+		Robot tender = null; // tender robot to simulate the move
+		try {
+			tender = (Robot) me.clone();
+		}
+		catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		
+		
 		
 		
 

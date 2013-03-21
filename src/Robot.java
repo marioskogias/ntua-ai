@@ -1,6 +1,4 @@
-import java.io.*;
-
-public class Robot {
+public class Robot implements Cloneable {
 
 	/**
 	 * @param args
@@ -108,7 +106,9 @@ public class Robot {
 		return 0;
 	}
 	
-	
+	public Robot clone() throws CloneNotSupportedException {
+        return (Robot) super.clone();
+}
 	
 
 }

@@ -41,6 +41,7 @@ public class Robot implements Cloneable {
 		this.posX = x;
 		this.posY = y;
 	}
+	
 	public int canMove(int direction) {
 		switch (direction) {
 		case 1: // 1 de3ia

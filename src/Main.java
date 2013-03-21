@@ -14,7 +14,6 @@ public class Main {
 	int tarY;
 	int moved_so_far = 0;
 	char[][] place; // to epipedo ergasias
-	
 
 	public static void main(String[] args) {
 
@@ -69,69 +68,20 @@ public class Main {
 		Robot tender = null; // tender robot to simulate the move
 		try {
 			tender = (Robot) me.clone();
-		}
-		catch (CloneNotSupportedException e) {
+		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-		
-		PriorityQueue<Node> queue = new PriorityQueue<Node>();
+
+		PriorityQueue<Node> queue;
 		Node node;
 		Node curNode = null;
 		int found = 0;
 
-		if (tender.checkFound() == 0) {
-			if (tender.canMove(1) == 1) {
-				node = new Node(tender.posX + 3, tender.posY, 1);
-				node.cost_so_far = m.moved_so_far + 3;
-				node.left_to_reach = Math.abs(node.posX - m.tarX)
-						+ Math.abs(node.posY - m.tarY);// this is gonna
-														// change
-				node.overall_cost = node.cost_so_far + node.left_to_reach;
-				queue.add(node);
-			}
-			if (tender.canMove(2) == 1) {
-				node = new Node(tender.posX - 3, tender.posY, 1);
-				node.cost_so_far = m.moved_so_far + 3;
-				node.left_to_reach = Math.abs(node.posX - m.tarX)
-						+ Math.abs(node.posY - m.tarY);// this is gonna
-														// change
-				node.overall_cost = node.cost_so_far + node.left_to_reach;
-				queue.add(node);
-			}
-			if (tender.canMove(3) == 1) {
-				node = new Node(tender.posX, tender.posY + 3, 1);
-				node.cost_so_far = m.moved_so_far + 3;
-				node.left_to_reach = Math.abs(node.posX - m.tarX)
-						+ Math.abs(node.posY - m.tarY);// this is gonna
-														// change
-				node.overall_cost = node.cost_so_far + node.left_to_reach;
-				queue.add(node);
-			}
-			if (tender.canMove(4) == 1) {
-				node = new Node(tender.posX, tender.posY - 3, 1);
-				node.cost_so_far = m.moved_so_far + 3;
-				node.left_to_reach = Math.abs(node.posX - m.tarX)
-						+ Math.abs(node.posY - m.tarY);// this is gonna
-														// change
-				node.overall_cost = node.cost_so_far + node.left_to_reach;
-				queue.add(node);
-			}
-			curNode = queue.poll();
-			tender.go_to_point(curNode.posX,curNode.posY);
-			
-		} else
-			found = 1;
-		
-		if (found == 0) {
-			curNode = queue.poll();
-			tender.go_to_point(curNode.posX,curNode.posY);
-		}
-		
-		while (found == 0) {
-
+		while (true) {
+			queue = new PriorityQueue<Node>();
 			if (tender.checkFound() == 0) {
 				if (tender.canMove(1) == 1) {
-					node = new Node(tender.posX + 3, tender.posY, curNode.initial_move);
+					node = new Node(tender.posX + 3, tender.posY, 1);
 					node.cost_so_far = m.moved_so_far + 3;
 					node.left_to_reach = Math.abs(node.posX - m.tarX)
 							+ Math.abs(node.posY - m.tarY);// this is gonna
@@ -140,7 +90,7 @@ public class Main {
 					queue.add(node);
 				}
 				if (tender.canMove(2) == 1) {
-					node = new Node(tender.posX - 3, tender.posY, curNode.initial_move);
+					node = new Node(tender.posX - 3, tender.posY, 1);
 					node.cost_so_far = m.moved_so_far + 3;
 					node.left_to_reach = Math.abs(node.posX - m.tarX)
 							+ Math.abs(node.posY - m.tarY);// this is gonna
@@ -149,7 +99,7 @@ public class Main {
 					queue.add(node);
 				}
 				if (tender.canMove(3) == 1) {
-					node = new Node(tender.posX, tender.posY + 3, curNode.initial_move);
+					node = new Node(tender.posX, tender.posY + 3, 1);
 					node.cost_so_far = m.moved_so_far + 3;
 					node.left_to_reach = Math.abs(node.posX - m.tarX)
 							+ Math.abs(node.posY - m.tarY);// this is gonna
@@ -158,7 +108,7 @@ public class Main {
 					queue.add(node);
 				}
 				if (tender.canMove(4) == 1) {
-					node = new Node(tender.posX, tender.posY - 3, curNode.initial_move);
+					node = new Node(tender.posX, tender.posY - 3, 1);
 					node.cost_so_far = m.moved_so_far + 3;
 					node.left_to_reach = Math.abs(node.posX - m.tarX)
 							+ Math.abs(node.posY - m.tarY);// this is gonna
@@ -167,20 +117,79 @@ public class Main {
 					queue.add(node);
 				}
 				curNode = queue.poll();
-				tender.go_to_point(curNode.posX,curNode.posY);
-				
+				tender.go_to_point(curNode.posX, curNode.posY);
+
 			} else
 				found = 1;
+
+			if (found == 0) {
+				curNode = queue.poll();
+				System.out.println(curNode.posX + " " + curNode.posX);
+				tender.go_to_point(curNode.posX, curNode.posY);
+			}
+
+			while (found == 0) {
+				System.out.println("in loop");
+				if (tender.checkFound() == 0) {
+					if (tender.canMove(1) == 1) {
+						node = new Node(tender.posX + 3, tender.posY,
+								curNode.initial_move);
+						node.cost_so_far = curNode.cost_so_far + 3;
+						node.left_to_reach = Math.abs(node.posX - m.tarX)
+								+ Math.abs(node.posY - m.tarY);// this is gonna
+																// change
+						node.overall_cost = node.cost_so_far
+								+ node.left_to_reach;
+						queue.add(node);
+					}
+					if (tender.canMove(2) == 1) {
+						node = new Node(tender.posX - 3, tender.posY,
+								curNode.initial_move);
+						node.cost_so_far = curNode.cost_so_far + 3;
+						node.left_to_reach = Math.abs(node.posX - m.tarX)
+								+ Math.abs(node.posY - m.tarY);// this is gonna
+																// change
+						node.overall_cost = node.cost_so_far
+								+ node.left_to_reach;
+						queue.add(node);
+					}
+					if (tender.canMove(3) == 1) {
+						node = new Node(tender.posX, tender.posY + 3,
+								curNode.initial_move);
+						node.cost_so_far = curNode.cost_so_far + 3;
+						node.left_to_reach = Math.abs(node.posX - m.tarX)
+								+ Math.abs(node.posY - m.tarY);// this is gonna
+																// change
+						node.overall_cost = node.cost_so_far
+								+ node.left_to_reach;
+						queue.add(node);
+					}
+					if (tender.canMove(4) == 1) {
+						node = new Node(tender.posX, tender.posY - 3,
+								curNode.initial_move);
+						node.cost_so_far = curNode.cost_so_far + 3;
+						node.left_to_reach = Math.abs(node.posX - m.tarX)
+								+ Math.abs(node.posY - m.tarY);// this is gonna
+																// change
+						node.overall_cost = node.cost_so_far
+								+ node.left_to_reach;
+						queue.add(node);
+					}
+					curNode = queue.poll();
+					System.out.println(curNode.posX + " " + curNode.posX);
+					tender.go_to_point(curNode.posX, curNode.posY);
+
+				} else
+					found = 1;
+			}
+
+			System.out.println(curNode.initial_move);
+			me.move(curNode.initial_move);
+			m.moved_so_far = curNode.cost_so_far;
+			if (me.checkFound() == 1)
+				break;
+
 		}
-		
-		System.out.println(queue.poll().overall_cost);
-		System.out.println(queue.poll().overall_cost);
-		
-		
-		
-		
-		
 
 	}
-
 }

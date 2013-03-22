@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.PriorityQueue;
+import java.util.Random;
+
 
 public class Main {
 
@@ -86,6 +88,7 @@ public class Main {
 		Node node;
 		Node curNode = null;
 		int found = 0;
+		Random randomGenerator = new Random();
 
 		while (true) {
 			try {
@@ -156,7 +159,7 @@ public class Main {
 
 			while (true) {
 				System.out.println("in loop ");
-				System.out.println("my position is " + me.posX + " " + me.posY);
+				System.out.println("my position is " + me.posY + " " + me.posX);
 				if (tender.checkFound()) {
 					System.out.println("found");
 					break;
@@ -233,9 +236,19 @@ public class Main {
 			me.move(curNode.initial_move);
 			System.out.println("ok");
 			m.moved_so_far = m.moved_so_far + 3;
+			
+			// move the second robot
+			i = randomGenerator.nextInt(3) + 1;
+			while(!target.canMove(i))
+				i = randomGenerator.nextInt(3) + 1;
+			target.move(i);
+			System.out.println("The target went to " + target.posY + " " + target.posX);
+			m.tarX = target.posX;
+			m.tarY = target.posY;
+			
+			//check if found in one move
 			if (me.checkFound())
 				break;
-
 		}
 		System.out.println("sth more than " + m.moved_so_far);
 

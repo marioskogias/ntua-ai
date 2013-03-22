@@ -77,10 +77,10 @@ public class Main {
 			m.tarY = target.posY;
 
 			m.place = new char[m.limY+1][m.limX+1];
-			for (i = 0; i < m.limY; i++) {
+			for (i = 0; i <= m.limY; i++) {
 				line = in.readLine();
 				char[] array = line.toCharArray();
-				for (j = 0; j < m.limX; j++)
+				for (j = 0; j <= m.limX; j++)
 					m.place[i][j] = array[j];
 			}
 
@@ -94,6 +94,9 @@ public class Main {
 		//System.out.println("my position is " + me.posY + " " + me.posX);
 		// start the procedure
 		m.place[target.posY][target.posX] = 'T';
+		m.place[me.posY][me.posX] = 'M';
+		
+			
 		
 		Robot tender = null; // tender robot to simulate the move
 
@@ -107,6 +110,7 @@ public class Main {
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 			}
+			tender.name = 'H';
 			//System.out.println("robot is at " + tender.posY + " " + tender.posX);
 			m.queue = new PriorityQueue<Node>();
 			if (!tender.checkFound()) {
@@ -152,19 +156,22 @@ public class Main {
 
 			if (found == 0) {
 				curNode = m.queue.poll();
-				tender.prevX = tender.posX;
-				tender.prevY = tender.posY;
 				tender.go_to_point(curNode.posX, curNode.posY);
 				//System.out.println("robot is at " + tender.posY + " "
 					//	+ tender.posX);
 			}
 
 			while (true) {
+				for (i=0;i<4;i++){
+					for (j=0;j<4;j++)
+						System.out.print(m.place[i][j]);
+					System.out.println();
+				}
 				//System.out.println("in loop ");
 				//System.out.println("my position is " + me.posY + " " + me.posX);
 				System.out.println("robot is at " + tender.posY + " " + tender.posX);
 				if (tender.checkFound()) {
-					//System.out.println("found");
+					System.out.println("found");
 					break;
 				}
 
@@ -198,7 +205,7 @@ public class Main {
 					m.queue.add(node);
 					m.nodeTable[node.posY][node.posX] = node;
 				}
-				if ((tender.canMove(4)) && (m.shouldMove(tender.posX,tender.posY-3,curNode.cost_so_far+1))) {
+				if ((tender.canMove(4)) && (m.shouldMove(tender.posX,tender.posY-1,curNode.cost_so_far+1))) {
 					//System.out.println("can move 4");
 					node = new Node(tender.posX, tender.posY - 1,
 							curNode);
@@ -219,8 +226,6 @@ public class Main {
 				}
 				
 					
-				tender.prevX = tender.posX;
-				tender.prevY = tender.posY;
 				tender.go_to_point(curNode.posX, curNode.posY);
 				//System.out.println("robot is at " + tender.posY + " "
 					//	+ tender.posX);
@@ -229,10 +234,12 @@ public class Main {
 
 		//	System.out.println(curNode.initial_move);
 		//	System.out.println("my position is " + me.posY + " " + me.posX);
-			while (curNode.depth > 3)
+			while (curNode.depth > 3) 
 				curNode = curNode.father;
+				
+				
 			me.go_to_point(curNode.posX,curNode.posY);
-		//	System.out.println("ok");
+		    System.out.println("moved to " + me.posY + " " + me.posX);
 			m.moved_so_far = m.moved_so_far + 3;
 			
 			// move the second robot

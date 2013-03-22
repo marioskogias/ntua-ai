@@ -13,6 +13,7 @@ public class Node implements Comparable<Node>{
 	public Node(int x, int y, Node father) {
 		this.posX = x;
 		this.posY = y;
+		this.father = father;
 		if (father == null)
 			this.depth = 1;
 		else 

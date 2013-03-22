@@ -50,7 +50,6 @@ public class Main {
 			m.limY--;
 			m.limX = Integer.parseInt(a[1]);
 			m.limX--;
-			m.nodeTable = new Node[m.limY+1][m.limX+1];
 			me.limX = m.limX;
 			me.limY = m.limY;
 			target.limX = m.limX;
@@ -113,9 +112,10 @@ public class Main {
 			tender.name = 'H';
 			//System.out.println("robot is at " + tender.posY + " " + tender.posX);
 			m.queue = new PriorityQueue<Node>();
+			m.nodeTable = new Node[m.limY+1][m.limX+1];
 			if (!tender.checkFound()) {
 				if (tender.canMove(1)) {
-					//System.out.println("can move 1");
+					System.out.println("can move 1");
 					node = new Node(tender.posX + 1, tender.posY, null);
 					node.cost_so_far = m.moved_so_far + 1;
 					node.left_to_reach = m.heuristic(node);
@@ -124,7 +124,7 @@ public class Main {
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(2)) {
-					//System.out.println("can move 2");
+					System.out.println("can move 2");
 					node = new Node(tender.posX - 1, tender.posY, null);
 					node.cost_so_far = m.moved_so_far + 1;
 					node.left_to_reach = m.heuristic(node);
@@ -133,7 +133,7 @@ public class Main {
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(3)) {
-					//System.out.println("can move 3");
+					System.out.println("can move 3");
 					node = new Node(tender.posX, tender.posY + 1, null);
 					node.cost_so_far = m.moved_so_far + 1;
 					node.left_to_reach = m.heuristic(node);
@@ -142,7 +142,7 @@ public class Main {
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(4)) {
-					//System.out.println("can move 4");
+					System.out.println("can move 4");
 					node = new Node(tender.posX, tender.posY - 1, null);
 					node.cost_so_far = m.moved_so_far + 1;
 					node.left_to_reach = m.heuristic(node);
@@ -162,11 +162,7 @@ public class Main {
 			}
 
 			while (true) {
-				for (i=0;i<4;i++){
-					for (j=0;j<4;j++)
-						System.out.print(m.place[i][j]);
-					System.out.println();
-				}
+				
 				//System.out.println("in loop ");
 				//System.out.println("my position is " + me.posY + " " + me.posX);
 				System.out.println("robot is at " + tender.posY + " " + tender.posX);
@@ -176,7 +172,7 @@ public class Main {
 				}
 
 				if ((tender.canMove(1)) && (m.shouldMove(tender.posX + 1,tender.posY,curNode.cost_so_far+1))) {
-				//	System.out.println("can move 1");
+					System.out.println("can move 1");
 					node = new Node(tender.posX + 1, tender.posY,
 							curNode);
 					node.cost_so_far = curNode.cost_so_far + 1;
@@ -184,9 +180,10 @@ public class Main {
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
 					m.nodeTable[node.posY][node.posX] = node;
-				}
+				} 
+				
 				if ((tender.canMove(2)) && (m.shouldMove(tender.posX - 1,tender.posY,curNode.cost_so_far+1))) {
-					//System.out.println("can move 2");
+					System.out.println("can move 2");
 					node = new Node(tender.posX - 1, tender.posY,
 							curNode);
 					node.cost_so_far = curNode.cost_so_far + 1;
@@ -196,7 +193,7 @@ public class Main {
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if ((tender.canMove(3)) && (m.shouldMove(tender.posX,tender.posY+1,curNode.cost_so_far+1))) {
-					//System.out.println("can move 3");
+					System.out.println("can move 3");
 					node = new Node(tender.posX, tender.posY + 1,
 							curNode);
 					node.cost_so_far = curNode.cost_so_far + 1;
@@ -206,7 +203,7 @@ public class Main {
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if ((tender.canMove(4)) && (m.shouldMove(tender.posX,tender.posY-1,curNode.cost_so_far+1))) {
-					//System.out.println("can move 4");
+					System.out.println("can move 4");
 					node = new Node(tender.posX, tender.posY - 1,
 							curNode);
 					node.cost_so_far = curNode.cost_so_far + 1;
@@ -234,11 +231,14 @@ public class Main {
 
 		//	System.out.println(curNode.initial_move);
 		//	System.out.println("my position is " + me.posY + " " + me.posX);
+			
 			while (curNode.depth > 3) 
 				curNode = curNode.father;
 				
 				
 			me.go_to_point(curNode.posX,curNode.posY);
+			if (me.checkFound()) 
+				break;
 		    System.out.println("moved to " + me.posY + " " + me.posX);
 			m.moved_so_far = m.moved_so_far + 3;
 			
@@ -252,8 +252,7 @@ public class Main {
 			m.tarY = target.posY;
 			
 			//check if found in one move
-			if (me.checkFound())
-				break;
+			
 		}
 		System.out.println("sth more than " + m.moved_so_far);
 

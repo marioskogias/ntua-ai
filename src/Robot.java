@@ -38,11 +38,11 @@ public class Robot implements Cloneable {
 	}
 
 	public void go_to_point(int x, int y) {
-		if (this.name == 'M' || this.name == 'T') 
+		if (this.name == 'T') 
 			this.place[this.posY][this.posX] = 'O';
 		this.posX = x;
 		this.posY = y;
-		if (this.name == 'M' || this.name == 'T') 
+		if (this.name == 'T') 
 			this.place[this.posY][this.posX] = this.name;
 	}
 

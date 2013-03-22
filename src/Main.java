@@ -42,6 +42,7 @@ public class Main {
 			String[] a = line.split(" ");
 			m.limY = Integer.parseInt(a[0]);
 			m.limX = Integer.parseInt(a[1]);
+			m.nodeTable = new Node[m.limY][m.limX];
 			me.limX = m.limX;
 			me.limY = m.limY;
 			target.limX = m.limX;
@@ -105,6 +106,7 @@ public class Main {
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(2)) {
 					System.out.println("can move 2");
@@ -115,6 +117,7 @@ public class Main {
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(3)) {
 					System.out.println("can move 3");
@@ -125,6 +128,7 @@ public class Main {
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(4)) {
 					System.out.println("can move 4");
@@ -135,6 +139,7 @@ public class Main {
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					m.nodeTable[node.posY][node.posX] = node;
 				}
 
 			} else
@@ -167,6 +172,7 @@ public class Main {
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if ((tender.canMove(2)) && (m.shouldMove(tender.posX - 3,tender.posY,curNode.cost_so_far+3))) {
 					System.out.println("can move 2");
@@ -178,6 +184,7 @@ public class Main {
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if ((tender.canMove(3)) && (m.shouldMove(tender.posX,tender.posY+3,curNode.cost_so_far+3))) {
 					System.out.println("can move 3");
@@ -189,6 +196,7 @@ public class Main {
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if ((tender.canMove(4)) && (m.shouldMove(tender.posX,tender.posY-3,curNode.cost_so_far+3))) {
 					System.out.println("can move 4");
@@ -200,6 +208,7 @@ public class Main {
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					m.nodeTable[node.posY][node.posX] = node;
 				}
 				try {
 					curNode = m.queue.poll();

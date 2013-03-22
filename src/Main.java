@@ -22,7 +22,7 @@ public class Main {
 	public boolean shouldMove(int x, int y,int cost) {
 		if (this.nodeTable[y][x] == null)
 			return true;
-		else if (this.nodeTable[y][x].overall_cost > cost) {
+		else if (this.nodeTable[y][x].cost_so_far > cost) {
 			this.queue.remove(this.nodeTable[y][x]);
 			return true;
 		} else 

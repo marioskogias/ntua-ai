@@ -44,73 +44,75 @@ public class Robot implements Cloneable {
 		this.posY = y;
 	}
 	
-	public int canMove(int direction) {
+	public boolean canMove(int direction) {
 		switch (direction) {
 		case 1: // 1 de3ia
 			if ((posX + 3 <= limX) && (place[posY][posX + 1] == 'O')
 					&& (place[posY][posX + 2] == 'O')
 					&& (place[posY][posX + 3] == 'O'))
-				return 1;
+				return true;
 			else
-				return 0;
+				return false;
 		case 2: // 2 aristera
 			if ((posX - 3 >= 0) && (this.place[posY][posX - 1] == 'O')
 					&& (place[posY][posX - 2] == 'O')
 					&& (place[posY][posX - 3] == 'O'))
-				return 1;
+				return true;
 			else
-				return 0;
+				return false;
 		case 3: // 3 katw
 			if ((posY + 3 <= limY) && (place[posY + 1][posX] == 'O')
 					&& (place[posY + 2][posX] == 'O')
 					&& (place[posY + 3][posX] == 'O'))
-				return 1;
+				return true;
 			else
-				return 0;
+				return false;
 		case 4: // 4 panw
 			if ((posY - 3 >=  0) && (place[posY - 1][posX] == 'O')
 					&& (place[posY - 2][posX] == 'O')
 					&& (place[posY - 3][posX] == 'O'))
-				return 1;
+				return true;
 			else
-				return 0;
+				return false;
 
 		}
-		return 0;
+		return false;
 
 	}
 	
-	public int checkFound() {
+	
+	
+	public boolean checkFound() {
 		int i;
 		for (i=0;i<4 && (posX+i)<limX;i++) { //de3ia
 			if (place[posY][posX + i] == 'X')
 				break;
 			if (place[posY][posX+i] == 'T')
-				return 1;
+				return true;
 		}
 		
 		for (i=0;i<4 && (posX-i)>=0;i++) { //aristera
 			if (place[posY][posX - i] == 'X')
 				break;
 			if (place[posY][posX -i] == 'T')
-				return 1;
+				return true;
 		}
 		
 		for (i=0;i<4 && (posY+i)<limY;i++) { //panw
 			if (place[posY+i][posX] == 'X')
 				break;
 			if (place[posY+i][posX] == 'T')
-				return 1;
+				return true;
 		}
 		
 		for (i=0;i<4 && (posY-i)>=0;i++) { //de3ia
 			if (place[posY-i][posX] == 'X')
 				break;
 			if (place[posY-i][posX] == 'T')
-				return 1;
+				return true;
 		}
 		
-		return 0;
+		return false;
 	}
 	
 	public Robot clone() throws CloneNotSupportedException {

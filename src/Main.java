@@ -14,6 +14,19 @@ public class Main {
 	int tarY;
 	int moved_so_far = 0;
 	char[][] place; // to epipedo ergasias
+	Node[][] nodeTable;
+	PriorityQueue<Node> queue;
+
+	public boolean shouldMove(int x, int y,int cost) {
+		if (this.nodeTable[y][x] == null)
+			return true;
+		else if (this.nodeTable[y][x].overall_cost > cost) {
+			this.queue.remove(this.nodeTable[y][x]);
+			return true;
+		} else 
+			return false;
+	}
+	
 
 	public static void main(String[] args) {
 
@@ -24,7 +37,7 @@ public class Main {
 		// get the input
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(
-					"/Users/marioskogias/Documents/ntua/ai-ntua/src/input.txt"));
+					"/Users/Marios/Documents/ntua/7o/ntua-ai/src/input.txt"));
 			String line = in.readLine();
 			String[] a = line.split(" ");
 			m.limY = Integer.parseInt(a[0]);
@@ -65,16 +78,15 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("my position is " +me.posY + " " + me.posX);
+		System.out.println("my position is " + me.posY + " " + me.posX);
 		// start the procedure
 		Robot tender = null; // tender robot to simulate the move
 
-		PriorityQueue<Node> queue;
 		Node node;
 		Node curNode = null;
 		int found = 0;
 
-	while (true) {
+		while (true) {
 			try {
 				tender = (Robot) me.clone();
 			} catch (CloneNotSupportedException e) {
@@ -82,9 +94,9 @@ public class Main {
 			}
 			System.out
 					.println("robot is at " + tender.posY + " " + tender.posX);
-			queue = new PriorityQueue<Node>();
-			if (tender.checkFound() == 0) {
-				if (tender.canMove(1) == 1) {
+			m.queue = new PriorityQueue<Node>();
+			if (!tender.checkFound()) {
+				if (tender.canMove(1)) {
 					System.out.println("can move 1");
 					node = new Node(tender.posX + 3, tender.posY, 1);
 					node.cost_so_far = m.moved_so_far + 3;
@@ -92,9 +104,9 @@ public class Main {
 							+ Math.abs(node.posY - m.tarY);// this is gonna
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
-					queue.add(node);
+					m.queue.add(node);
 				}
-				if (tender.canMove(2) == 1) {
+				if (tender.canMove(2)) {
 					System.out.println("can move 2");
 					node = new Node(tender.posX - 3, tender.posY, 2);
 					node.cost_so_far = m.moved_so_far + 3;
@@ -102,9 +114,9 @@ public class Main {
 							+ Math.abs(node.posY - m.tarY);// this is gonna
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
-					queue.add(node);
+					m.queue.add(node);
 				}
-				if (tender.canMove(3) == 1) {
+				if (tender.canMove(3)) {
 					System.out.println("can move 3");
 					node = new Node(tender.posX, tender.posY + 3, 3);
 					node.cost_so_far = m.moved_so_far + 3;
@@ -112,9 +124,9 @@ public class Main {
 							+ Math.abs(node.posY - m.tarY);// this is gonna
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
-					queue.add(node);
+					m.queue.add(node);
 				}
-				if (tender.canMove(4) == 1) {
+				if (tender.canMove(4)) {
 					System.out.println("can move 4");
 					node = new Node(tender.posX, tender.posY - 3, 4);
 					node.cost_so_far = m.moved_so_far + 3;
@@ -122,31 +134,30 @@ public class Main {
 							+ Math.abs(node.posY - m.tarY);// this is gonna
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
-					queue.add(node);
+					m.queue.add(node);
 				}
 
 			} else
 				found = 1;
 
 			if (found == 0) {
-				curNode = queue.poll();
+				curNode = m.queue.poll();
 				tender.prevX = tender.posX;
 				tender.prevY = tender.posY;
 				tender.go_to_point(curNode.posX, curNode.posY);
 				System.out.println("robot is at " + tender.posY + " "
 						+ tender.posX);
 			}
-			
+
 			while (true) {
 				System.out.println("in loop ");
-				System.out.println("my position is " +me.posX + " " + me.posY);
-				if (tender.checkFound() == 1) {
+				System.out.println("my position is " + me.posX + " " + me.posY);
+				if (tender.checkFound()) {
 					System.out.println("found");
 					break;
 				}
-					
-				if ((tender.canMove(1) == 1)
-						&& (tender.prevX != tender.posX + 3)) {
+
+				if ((tender.canMove(1)) && (m.shouldMove(tender.posX + 3,tender.posY,curNode.cost_so_far+3))) {
 					System.out.println("can move 1");
 					node = new Node(tender.posX + 3, tender.posY,
 							curNode.initial_move);
@@ -155,10 +166,9 @@ public class Main {
 							+ Math.abs(node.posY - m.tarY);// this is gonna
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
-					queue.add(node);
+					m.queue.add(node);
 				}
-				if ((tender.canMove(2) == 1)
-						&& (tender.prevX != tender.posX - 3)) {
+				if ((tender.canMove(2)) && (m.shouldMove(tender.posX - 3,tender.posY,curNode.cost_so_far+3))) {
 					System.out.println("can move 2");
 					node = new Node(tender.posX - 3, tender.posY,
 							curNode.initial_move);
@@ -167,10 +177,9 @@ public class Main {
 							+ Math.abs(node.posY - m.tarY);// this is gonna
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
-					queue.add(node);
+					m.queue.add(node);
 				}
-				if ((tender.canMove(3) == 1)
-						&& (tender.prevY != tender.posY + 3)) {
+				if ((tender.canMove(3)) && (m.shouldMove(tender.posX,tender.posY+3,curNode.cost_so_far+3))) {
 					System.out.println("can move 3");
 					node = new Node(tender.posX, tender.posY + 3,
 							curNode.initial_move);
@@ -179,10 +188,9 @@ public class Main {
 							+ Math.abs(node.posY - m.tarY);// this is gonna
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
-					queue.add(node);
+					m.queue.add(node);
 				}
-				if ((tender.canMove(4) == 1)
-						&& (tender.prevY != tender.posY - 3)) {
+				if ((tender.canMove(4)) && (m.shouldMove(tender.posX,tender.posY-3,curNode.cost_so_far+3))) {
 					System.out.println("can move 4");
 					node = new Node(tender.posX, tender.posY - 3,
 							curNode.initial_move);
@@ -191,9 +199,18 @@ public class Main {
 							+ Math.abs(node.posY - m.tarY);// this is gonna
 															// change
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
-					queue.add(node);
+					m.queue.add(node);
 				}
-				curNode = queue.poll();
+				try {
+					curNode = m.queue.poll();
+					if (curNode == null)
+						throw new canNotReach("The target is aunreachable\n");
+				} catch (canNotReach c) {
+					System.out.println(c.getMessage()); 
+					System.exit(1);
+				}
+				
+					
 				tender.prevX = tender.posX;
 				tender.prevY = tender.posY;
 				tender.go_to_point(curNode.posX, curNode.posY);
@@ -201,16 +218,15 @@ public class Main {
 						+ tender.posX);
 
 			}
-			
 
 			System.out.println(curNode.initial_move);
-			System.out.println("my position is " +me.posY + " " + me.posX);
+			System.out.println("my position is " + me.posY + " " + me.posX);
 			me.move(curNode.initial_move);
 			System.out.println("ok");
 			m.moved_so_far = m.moved_so_far + 3;
-			if (me.checkFound() == 1)
+			if (me.checkFound())
 				break;
-			
+
 		}
 		System.out.println("sth more than " + m.moved_so_far);
 

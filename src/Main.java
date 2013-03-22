@@ -29,7 +29,11 @@ public class Main {
 			return false;
 	}
 	
-
+	public int heuristic(Node n) {
+		return (Math.abs(n.posX - this.tarX)
+				+ Math.abs(n.posY - this.tarY));
+	}
+	
 	public static void main(String[] args) {
 
 		Main m = new Main();
@@ -108,44 +112,36 @@ public class Main {
 			if (!tender.checkFound()) {
 				if (tender.canMove(1)) {
 					//System.out.println("can move 1");
-					node = new Node(tender.posX + 3, tender.posY, 1);
-					node.cost_so_far = m.moved_so_far + 3;
-					node.left_to_reach = Math.abs(node.posX - m.tarX)
-							+ Math.abs(node.posY - m.tarY);// this is gonna
-															// change
+					node = new Node(tender.posX + 1, tender.posY, null);
+					node.cost_so_far = m.moved_so_far + 1;
+					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(2)) {
 					//System.out.println("can move 2");
-					node = new Node(tender.posX - 3, tender.posY, 2);
-					node.cost_so_far = m.moved_so_far + 3;
-					node.left_to_reach = Math.abs(node.posX - m.tarX)
-							+ Math.abs(node.posY - m.tarY);// this is gonna
-															// change
+					node = new Node(tender.posX - 1, tender.posY, null);
+					node.cost_so_far = m.moved_so_far + 1;
+					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(3)) {
 					//System.out.println("can move 3");
-					node = new Node(tender.posX, tender.posY + 3, 3);
-					node.cost_so_far = m.moved_so_far + 3;
-					node.left_to_reach = Math.abs(node.posX - m.tarX)
-							+ Math.abs(node.posY - m.tarY);// this is gonna
-															// change
+					node = new Node(tender.posX, tender.posY + 1, null);
+					node.cost_so_far = m.moved_so_far + 1;
+					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(4)) {
 					//System.out.println("can move 4");
-					node = new Node(tender.posX, tender.posY - 3, 4);
-					node.cost_so_far = m.moved_so_far + 3;
-					node.left_to_reach = Math.abs(node.posX - m.tarX)
-							+ Math.abs(node.posY - m.tarY);// this is gonna
-															// change
+					node = new Node(tender.posX, tender.posY - 1, null);
+					node.cost_so_far = m.moved_so_far + 1;
+					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
 					m.nodeTable[node.posY][node.posX] = node;
@@ -172,50 +168,42 @@ public class Main {
 					break;
 				}
 
-				if ((tender.canMove(1)) && (m.shouldMove(tender.posX + 3,tender.posY,curNode.cost_so_far+3))) {
+				if ((tender.canMove(1)) && (m.shouldMove(tender.posX + 1,tender.posY,curNode.cost_so_far+1))) {
 				//	System.out.println("can move 1");
-					node = new Node(tender.posX + 3, tender.posY,
-							curNode.initial_move);
-					node.cost_so_far = curNode.cost_so_far + 3;
-					node.left_to_reach = Math.abs(node.posX - m.tarX)
-							+ Math.abs(node.posY - m.tarY);// this is gonna
-															// change
+					node = new Node(tender.posX + 1, tender.posY,
+							curNode);
+					node.cost_so_far = curNode.cost_so_far + 1;
+					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
 					m.nodeTable[node.posY][node.posX] = node;
 				}
-				if ((tender.canMove(2)) && (m.shouldMove(tender.posX - 3,tender.posY,curNode.cost_so_far+3))) {
+				if ((tender.canMove(2)) && (m.shouldMove(tender.posX - 1,tender.posY,curNode.cost_so_far+1))) {
 					//System.out.println("can move 2");
-					node = new Node(tender.posX - 3, tender.posY,
-							curNode.initial_move);
-					node.cost_so_far = curNode.cost_so_far + 3;
-					node.left_to_reach = Math.abs(node.posX - m.tarX)
-							+ Math.abs(node.posY - m.tarY);// this is gonna
-															// change
+					node = new Node(tender.posX - 1, tender.posY,
+							curNode);
+					node.cost_so_far = curNode.cost_so_far + 1;
+					node.left_to_reach =m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
 					m.nodeTable[node.posY][node.posX] = node;
 				}
-				if ((tender.canMove(3)) && (m.shouldMove(tender.posX,tender.posY+3,curNode.cost_so_far+3))) {
+				if ((tender.canMove(3)) && (m.shouldMove(tender.posX,tender.posY+1,curNode.cost_so_far+1))) {
 					//System.out.println("can move 3");
-					node = new Node(tender.posX, tender.posY + 3,
-							curNode.initial_move);
-					node.cost_so_far = curNode.cost_so_far + 3;
-					node.left_to_reach = Math.abs(node.posX - m.tarX)
-							+ Math.abs(node.posY - m.tarY);// this is gonna
-															// change
+					node = new Node(tender.posX, tender.posY + 1,
+							curNode);
+					node.cost_so_far = curNode.cost_so_far + 1;
+					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
 					m.nodeTable[node.posY][node.posX] = node;
 				}
-				if ((tender.canMove(4)) && (m.shouldMove(tender.posX,tender.posY-3,curNode.cost_so_far+3))) {
+				if ((tender.canMove(4)) && (m.shouldMove(tender.posX,tender.posY-3,curNode.cost_so_far+1))) {
 					//System.out.println("can move 4");
-					node = new Node(tender.posX, tender.posY - 3,
-							curNode.initial_move);
-					node.cost_so_far = curNode.cost_so_far + 3;
-					node.left_to_reach = Math.abs(node.posX - m.tarX)
-							+ Math.abs(node.posY - m.tarY);// this is gonna
-															// change
+					node = new Node(tender.posX, tender.posY - 1,
+							curNode);
+					node.cost_so_far = curNode.cost_so_far + 1;
+					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
 					m.nodeTable[node.posY][node.posX] = node;
@@ -240,8 +228,10 @@ public class Main {
 			}
 
 		//	System.out.println(curNode.initial_move);
-			System.out.println("my position is " + me.posY + " " + me.posX);
-			me.move(curNode.initial_move);
+		//	System.out.println("my position is " + me.posY + " " + me.posX);
+			while (curNode.depth > 3)
+				curNode = curNode.father;
+			me.go_to_point(curNode.posX,curNode.posY);
 		//	System.out.println("ok");
 			m.moved_so_far = m.moved_so_far + 3;
 			

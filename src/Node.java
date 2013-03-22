@@ -1,18 +1,22 @@
 //import java.util.ArrayList;
 
 public class Node implements Comparable<Node>{
-	int initial_move;
+	Node father;
 	int cost_so_far;
 	int left_to_reach;
 	int overall_cost;
 	int posX;
 	int posY;
+	int depth;
 	//ArrayList<Node> children;
 
-	public Node(int x, int y, int move) {
+	public Node(int x, int y, Node father) {
 		this.posX = x;
 		this.posY = y;
-		this.initial_move = move;
+		if (father == null)
+			this.depth = 1;
+		else 
+			this.depth = father.depth + 1;
 	}
 	
 	public int compareTo(Node n) { // arxika me over_all_const se isothta mikrotero ayto me to mikrotero left_to_reach

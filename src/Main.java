@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import java.awt.Container;
+import javax.swing.JOptionPane;
 
 public class Main {
 
@@ -115,8 +117,8 @@ public class Main {
 		
 		//visual representation
 		JFrame frame = new JFrame();
-	    frame.setTitle("FillRect");
-	    frame.setSize((m.limY+1)*100,(m.limX+1)*50);
+	    frame.setTitle("A* Implementation");
+	    frame.setSize((m.limY+1)*80,(m.limX+1)*35);
 	    frame.addWindowListener(new WindowAdapter() {
 	      public void windowClosing(WindowEvent e) {
 	        System.exit(0);
@@ -302,6 +304,7 @@ public class Main {
 			
 		}
 		System.out.println("sth more than " + m.moved_so_far);
+		JOptionPane.showMessageDialog(null,"Found the targer","A*",JOptionPane.WARNING_MESSAGE);
 
 	}
 

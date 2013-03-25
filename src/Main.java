@@ -18,7 +18,13 @@ public class Main {
 	char[][] place; // to epipedo ergasias
 	Node[][] nodeTable;
 	PriorityQueue<Node> queue;
-
+	
+	public char[][] toVisualRep(int Mx,int My) {
+		char[][] res = (char[][])this.place.clone();
+		res[My][Mx] = 'M';
+		return res;
+	}
+			
 	public boolean shouldMove(int x, int y,int cost) {
 		if (this.nodeTable[y][x] == null)
 			return true;

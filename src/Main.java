@@ -1,9 +1,14 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Random;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import java.awt.Container;
 
 public class Main {
 
@@ -20,7 +25,13 @@ public class Main {
 	PriorityQueue<Node> queue;
 	
 	public char[][] toVisualRep(int Mx,int My) {
-		char[][] res = (char[][])this.place.clone();
+		char[][]res = new char[this.place.length][];
+		
+		for (int i = 0; i < this.place.length; i++) {
+	        res[i] = Arrays.copyOf(this.place[i], this.place[i].length);
+	        
+	    }
+	    
 		res[My][Mx] = 'M';
 		return res;
 	}
@@ -99,9 +110,24 @@ public class Main {
 		//System.out.println("my position is " + me.posY + " " + me.posX);
 		// start the procedure
 		m.place[target.posY][target.posX] = 'T';
-		m.place[me.posY][me.posX] = 'M';
 		
-			
+		
+		
+		//visual representation
+		JFrame frame = new JFrame();
+	    frame.setTitle("FillRect");
+	    frame.setSize((m.limY+1)*100,(m.limX+1)*50);
+	    frame.addWindowListener(new WindowAdapter() {
+	      public void windowClosing(WindowEvent e) {
+	        System.exit(0);
+	      }
+	    });
+	    Container contentPane = frame.getContentPane();
+	    VisualRep p = new VisualRep();
+	    p.plane = m.toVisualRep(me.posY, me.posX);
+	    contentPane.add(p);
+	    frame.setVisible(true);
+	    
 		
 		Robot tender = null; // tender robot to simulate the move
 
@@ -110,6 +136,11 @@ public class Main {
 		int found = 0;
 		Random randomGenerator = new Random();
 		while (true) {
+			for(i=0;i<=m.limY;i++) {
+				for (j=0;j<=m.limX;j++)
+					System.out.print(m.place[i][j]);
+				System.out.println();
+			}
 			try {
 				tender = (Robot) me.clone();
 			} catch (CloneNotSupportedException e) {
@@ -257,7 +288,17 @@ public class Main {
 			m.tarX = target.posX;
 			m.tarY = target.posY;
 			
-			//check if found in one move
+			try {
+		        Thread.sleep(500);
+		    } catch(InterruptedException ex) {
+		        Thread.currentThread().interrupt();
+		    }
+		    
+		    
+		    p.plane = m.toVisualRep(me.posX, me.posY);
+		    frame.validate();
+		    frame.repaint();
+			
 			
 		}
 		System.out.println("sth more than " + m.moved_so_far);

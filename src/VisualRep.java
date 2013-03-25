@@ -16,7 +16,7 @@ public class VisualRep extends JPanel {
     int i,j;
     for (i=0;i<plane.length;i++){
     	for (j=0;j<plane[0].length;j++){
-    		g.drawRect(i*100, j*100, 100, 100);
+    		g.drawRect(j*50, i*50, 50, 50);
     	    switch(plane[i][j]){
     	   
     	    case 'X':
@@ -33,15 +33,16 @@ public class VisualRep extends JPanel {
     	    	break;
     	    }
     	    
-    	    g.fillRect(i*100, j*100, 100, 100);
-    	    System.out.println("i = "+ i + " j = "+ j);
+    	    g.fillRect(j*50, i*50, 50, 50);
+    	    
     	}
+    	
     }
     
-
+   
   }
  
-  public static void main(String[] args) {
+ /* public static void main(String[] args) {
     JFrame frame = new JFrame();
     frame.setTitle("FillRect");
     frame.setSize(400, 400);
@@ -75,6 +76,6 @@ public class VisualRep extends JPanel {
     p.plane[0][2] = 'T';
     frame.validate();
     frame.repaint();
-  }
+  }*/
  
 }

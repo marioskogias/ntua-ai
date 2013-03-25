@@ -35,6 +35,7 @@ public class Main {
 	    }
 	    
 		res[My][Mx] = 'M';
+		System.out.println("painting blue at "+ Mx + " " + My);
 		return res;
 	}
 			
@@ -62,7 +63,7 @@ public class Main {
 		// get the input
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(
-					"/Users/Marios/Documents/ntua/7o/ntua-ai/src/input.txt"));
+					"/Users/Marios/Documents/ntua/7o/ntua-ai/src/input6.txt"));
 			String line = in.readLine();
 			String[] a = line.split(" ");
 			m.limY = Integer.parseInt(a[0]);
@@ -109,11 +110,10 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//System.out.println("my position is " + me.posY + " " + me.posX);
 		// start the procedure
 		m.place[target.posY][target.posX] = 'T';
 		
-		
+		 System.out.println("very begin at " + me.posY + " " + me.posX);
 		
 		//visual representation
 		JFrame frame = new JFrame();
@@ -126,11 +126,11 @@ public class Main {
 	    });
 	    Container contentPane = frame.getContentPane();
 	    VisualRep p = new VisualRep();
-	    p.plane = m.toVisualRep(me.posY, me.posX);
+	    p.plane = m.toVisualRep(me.posX, me.posY);
 	    contentPane.add(p);
 	    frame.setVisible(true);
 	    
-		
+	    System.out.println("begin at " + me.posY + " " + me.posX);
 		Robot tender = null; // tender robot to simulate the move
 
 		Node node;
@@ -138,11 +138,7 @@ public class Main {
 		int found = 0;
 		Random randomGenerator = new Random();
 		while (true) {
-			for(i=0;i<=m.limY;i++) {
-				for (j=0;j<=m.limX;j++)
-					System.out.print(m.place[i][j]);
-				System.out.println();
-			}
+			
 			try {
 				tender = (Robot) me.clone();
 			} catch (CloneNotSupportedException e) {
@@ -154,7 +150,6 @@ public class Main {
 			m.nodeTable = new Node[m.limY+1][m.limX+1];
 			if (!tender.checkFound()) {
 				if (tender.canMove(1)) {
-					//System.out.println("can move 1");
 					node = new Node(tender.posX + 1, tender.posY, null);
 					node.cost_so_far = m.moved_so_far + 1;
 					node.left_to_reach = m.heuristic(node);
@@ -163,7 +158,6 @@ public class Main {
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(2)) {
-					//System.out.println("can move 2");
 					node = new Node(tender.posX - 1, tender.posY, null);
 					node.cost_so_far = m.moved_so_far + 1;
 					node.left_to_reach = m.heuristic(node);
@@ -172,7 +166,6 @@ public class Main {
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(3)) {
-					//System.out.println("can move 3");
 					node = new Node(tender.posX, tender.posY + 1, null);
 					node.cost_so_far = m.moved_so_far + 1;
 					node.left_to_reach = m.heuristic(node);
@@ -181,7 +174,6 @@ public class Main {
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(4)) {
-				//	System.out.println("can move 4");
 					node = new Node(tender.posX, tender.posY - 1, null);
 					node.cost_so_far = m.moved_so_far + 1;
 					node.left_to_reach = m.heuristic(node);
@@ -196,22 +188,17 @@ public class Main {
 			if (found == 0) {
 				curNode = m.queue.poll();
 				tender.go_to_point(curNode.posX, curNode.posY);
-				//System.out.println("robot is at " + tender.posY + " "
-					//	+ tender.posX);
+				
 			}
 
 			while (true) {
 				
-				//System.out.println("in loop ");
-				//System.out.println("my position is " + me.posY + " " + me.posX);
-				System.out.println("robot is at " + tender.posY + " " + tender.posX);
 				if (tender.checkFound()) {
 					System.out.println("found");
 					break;
 				}
 
 				if ((tender.canMove(1)) && (m.shouldMove(tender.posX + 1,tender.posY,curNode.cost_so_far+1))) {
-					//System.out.println("can move 1");
 					node = new Node(tender.posX + 1, tender.posY,
 							curNode);
 					node.cost_so_far = curNode.cost_so_far + 1;
@@ -222,7 +209,6 @@ public class Main {
 				} 
 				
 				if ((tender.canMove(2)) && (m.shouldMove(tender.posX - 1,tender.posY,curNode.cost_so_far+1))) {
-					//System.out.println("can move 2");
 					node = new Node(tender.posX - 1, tender.posY,
 							curNode);
 					node.cost_so_far = curNode.cost_so_far + 1;
@@ -232,7 +218,6 @@ public class Main {
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if ((tender.canMove(3)) && (m.shouldMove(tender.posX,tender.posY+1,curNode.cost_so_far+1))) {
-					//System.out.println("can move 3");
 					node = new Node(tender.posX, tender.posY + 1,
 							curNode);
 					node.cost_so_far = curNode.cost_so_far + 1;
@@ -242,7 +227,6 @@ public class Main {
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if ((tender.canMove(4)) && (m.shouldMove(tender.posX,tender.posY-1,curNode.cost_so_far+1))) {
-					//System.out.println("can move 4");
 					node = new Node(tender.posX, tender.posY - 1,
 							curNode);
 					node.cost_so_far = curNode.cost_so_far + 1;
@@ -258,24 +242,25 @@ public class Main {
 						throw new canNotReach("The target is aunreachable\n");
 				} catch (canNotReach c) {
 					System.out.println(c.getMessage()); 
+					JOptionPane.showMessageDialog(null,"The target is unreachable","A*",JOptionPane.WARNING_MESSAGE);
 					System.exit(1);
 				}
 				
 					
 				tender.go_to_point(curNode.posX, curNode.posY);
-				//System.out.println("robot is at " + tender.posY + " "
-					//	+ tender.posX);
+				
 
 			}
 
 		
-		//	System.out.println("my position is " + me.posY + " " + me.posX);
+		
 			
 			while (curNode.depth > 3) 
 				curNode = curNode.father;
 				
-				
+			System.out.println("me before moving " + me.posY + " " + me.posX);
 			me.go_to_point(curNode.posX,curNode.posY);
+			System.out.println("me go to point " + me.posY + " " + me.posX);
 			if (me.checkFound()) 
 				break;
 		    System.out.println("moved to " + me.posY + " " + me.posX);
@@ -286,7 +271,7 @@ public class Main {
 			while(!target.canMove(i))
 				i = randomGenerator.nextInt(3) + 1;
 			target.move(i);
-			System.out.println("The target went to " + target.posY + " " + target.posX);
+			//System.out.println("The target went to " + target.posY + " " + target.posX);
 			m.tarX = target.posX;
 			m.tarY = target.posY;
 			
@@ -294,6 +279,7 @@ public class Main {
 		        Thread.sleep(500);
 		    } catch(InterruptedException ex) {
 		        Thread.currentThread().interrupt();
+		        
 		    }
 		    
 		    
@@ -304,7 +290,7 @@ public class Main {
 			
 		}
 		System.out.println("sth more than " + m.moved_so_far);
-		JOptionPane.showMessageDialog(null,"Found the targer","A*",JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(null,"Found the target","A*",JOptionPane.WARNING_MESSAGE);
 
 	}
 

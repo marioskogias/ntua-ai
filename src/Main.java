@@ -60,6 +60,7 @@ public class Main {
 		Robot me = new Robot();
 		Robot target = new Robot();
 		int i, j;
+		int countStates = 0;
 		// get the input
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(
@@ -155,6 +156,7 @@ public class Main {
 					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					countStates++;
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(2)) {
@@ -163,6 +165,7 @@ public class Main {
 					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					countStates++;
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(3)) {
@@ -171,6 +174,7 @@ public class Main {
 					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					countStates++;
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if (tender.canMove(4)) {
@@ -179,6 +183,7 @@ public class Main {
 					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					countStates++;
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 
@@ -205,6 +210,7 @@ public class Main {
 					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					countStates++;
 					m.nodeTable[node.posY][node.posX] = node;
 				} 
 				
@@ -215,6 +221,7 @@ public class Main {
 					node.left_to_reach =m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					countStates++;
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if ((tender.canMove(3)) && (m.shouldMove(tender.posX,tender.posY+1,curNode.cost_so_far+1))) {
@@ -224,6 +231,7 @@ public class Main {
 					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					countStates++;
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				if ((tender.canMove(4)) && (m.shouldMove(tender.posX,tender.posY-1,curNode.cost_so_far+1))) {
@@ -233,6 +241,7 @@ public class Main {
 					node.left_to_reach = m.heuristic(node);
 					node.overall_cost = node.cost_so_far + node.left_to_reach;
 					m.queue.add(node);
+					countStates++;
 					m.nodeTable[node.posY][node.posX] = node;
 				}
 				
@@ -289,7 +298,7 @@ public class Main {
 			
 			
 		}
-		System.out.println("sth more than " + m.moved_so_far);
+		System.out.println("Opened " + countStates + "states");
 		JOptionPane.showMessageDialog(null,"Found the target","A*",JOptionPane.WARNING_MESSAGE);
 
 	}

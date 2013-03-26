@@ -50,8 +50,11 @@ public class Main {
 	}
 	
 	public int heuristic(Node n) {
-		return (Math.abs(n.posX - this.tarX)
+		int res =  (Math.abs(n.posX - this.tarX)
 				+ Math.abs(n.posY - this.tarY));
+		
+		res = res * res; // gia overestimate
+		return res;
 	}
 	
 	public static void main(String[] args) {
@@ -64,7 +67,7 @@ public class Main {
 		// get the input
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(
-					"/Users/Marios/Documents/ntua/7o/ntua-ai/src/input6.txt"));
+					"/Users/marioskogias/Documents/ntua/ai-ntua/src/input6.txt"));
 			String line = in.readLine();
 			String[] a = line.split(" ");
 			m.limY = Integer.parseInt(a[0]);

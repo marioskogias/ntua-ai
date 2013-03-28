@@ -24,14 +24,43 @@ diagnosis(flu) :- symptom(sore_throat),
 			symptom(fever),
 			symptom(nausia_vomit),
 			symptom(feeling_cold),
-			symptom(head_ache),
+			symptom(headache),
 			symptom(sneeze),
 			symptom(red_eyes).
+
+% diagnose minigitis
+
+diagnosis(minigitis) :- symptom(headache),
+			symptom(stiff),
+			symptom(fever),
+			symptom(sudden_fever),
+			symptom(mood),
+			symptom(photophobia).
 %Symptoms
 
 symptom(fever) :- has(fever),!.
 symptom(fever) :- \+ has_not(fever), write('Do you have a fever (y/n) ?'),
 			read(Reply),addKnowledge(fever,Reply),
+			Reply='y'.
+
+symptom(stiff) :- has(stiff),!.
+symptom(stiff) :- \+ has_not(stiff), write('Do you feel your neck stiff (y/n) ?'),
+			read(Reply),addKnowledge(stiff,Reply),
+			Reply='y'.
+
+symptom(sudden_fever) :- has(sudden_fever),!.
+symptom(sudden_fever) :- \+ has_not(sudden_fever), write('Was your fever sudden and high (y/n) ?'),
+			read(Reply),addKnowledge(sudden_fever,Reply),
+			Reply='y'.
+
+symptom(mood) :- has(mood),!.
+symptom(mood) :- \+ has_not(mood), write('Do you think your mood has changed recently y/n) ?'),
+			read(Reply),addKnowledge(mood,Reply),
+			Reply='y'.
+			
+symptom(photophobia) :- has(phoyophobia),!.
+symptom(photophobia) :- \+ has_not(photophobia), write('Are you afraid of light recently (y/n) ?'),
+			read(Reply),addKnowledge(photophobia,Reply),
 			Reply='y'.
 
 symptom(sneeze) :- has(sneeze),!.
@@ -48,8 +77,9 @@ symptom(feeling_cold) :- has(feeling_cold),!.
 symptom(feeling_cold) :- \+ has_not(feeling_cold), write('Do you often feel cold (y/n) ?'),
 			read(Reply),addKnowledge(feeling_cold,Reply),
 			Reply='y'.
+
 symptom(headache) :- has(headache),!.
-symptom(headache) :- \+ has_not(headache), write('Do you  have a fever (y/n) ?'),
+symptom(headache) :- \+ has_not(headache), write('Do you have a headache (y/n) ?'),
 			read(Reply),addKnowledge(headache,Reply),
 			Reply='y'.
 

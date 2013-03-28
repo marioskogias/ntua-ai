@@ -67,7 +67,7 @@ public class Main {
 		// get the input
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(
-					"/Users/marioskogias/Documents/ntua/ai-ntua/src/input6.txt"));
+					"/Users/Marios/Documents/ntua/7o/ntua-ai/src/input.txt"));
 			String line = in.readLine();
 			String[] a = line.split(" ");
 			m.limY = Integer.parseInt(a[0]);
@@ -117,7 +117,7 @@ public class Main {
 		// start the procedure
 		m.place[target.posY][target.posX] = 'T';
 		
-		 System.out.println("very begin at " + me.posY + " " + me.posX);
+		
 		
 		//visual representation
 		JFrame frame = new JFrame();
@@ -134,7 +134,7 @@ public class Main {
 	    contentPane.add(p);
 	    frame.setVisible(true);
 	    
-	    System.out.println("begin at " + me.posY + " " + me.posX);
+	    //System.out.println("begin at " + me.posY + " " + me.posX);
 		Robot tender = null; // tender robot to simulate the move
 
 		Node node;
@@ -149,7 +149,6 @@ public class Main {
 				e.printStackTrace();
 			}
 			tender.name = 'H';
-			//System.out.println("robot is at " + tender.posY + " " + tender.posX);
 			m.queue = new PriorityQueue<Node>();
 			m.nodeTable = new Node[m.limY+1][m.limX+1];
 			if (!tender.checkFound()) {
@@ -202,7 +201,6 @@ public class Main {
 			while (true) {
 				
 				if (tender.checkFound()) {
-					System.out.println("found");
 					break;
 				}
 
@@ -270,12 +268,11 @@ public class Main {
 			while (curNode.depth > 3) 
 				curNode = curNode.father;
 				
-			System.out.println("me before moving " + me.posY + " " + me.posX);
+			
 			me.go_to_point(curNode.posX,curNode.posY);
-			System.out.println("me go to point " + me.posY + " " + me.posX);
 			if (me.checkFound()) 
 				break;
-		    System.out.println("moved to " + me.posY + " " + me.posX);
+		    //System.out.println("moved to " + me.posY + " " + me.posX);
 			m.moved_so_far = m.moved_so_far + 3;
 			
 			// move the second robot
@@ -301,8 +298,8 @@ public class Main {
 			
 			
 		}
-		System.out.println("Opened " + countStates + "states");
-		JOptionPane.showMessageDialog(null,"Found the target","A*",JOptionPane.WARNING_MESSAGE);
+		System.out.println("Opened " + countStates + " states");
+		//JOptionPane.showMessageDialog(null,"Found the target","A*",JOptionPane.WARNING_MESSAGE);
 
 	}
 

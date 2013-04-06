@@ -67,7 +67,7 @@ public class Main {
 		// get the input
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(
-					"/Users/Marios/Documents/ntua/7o/ntua-ai/src/input.txt"));
+					"/Users/Marios/Documents/ntua/7o/ntua-ai/exe1/src/input1.txt"));
 			String line = in.readLine();
 			String[] a = line.split(" ");
 			m.limY = Integer.parseInt(a[0]);

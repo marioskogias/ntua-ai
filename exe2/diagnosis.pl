@@ -6,7 +6,7 @@ start:- write('Welcome to the automated system of nursing. Please answer the fol
 	write('You probably have '),
 	write(X),!.
 
-start:- write('The automated system can\'t figure aout what is your problem. You are suggested to visit a human doctor\n').
+start:- write('The automated system can\'t figure out what is your problem. You are suggested to visit a human doctor\n').
 
 
 
@@ -14,7 +14,7 @@ start:- write('The automated system can\'t figure aout what is your problem. You
 
 diagnosis(cold) :- symptom(sore_throat),
 		symptom(cough),
-		sympton(tired),
+		symptom(tired),
 		symptom(headache),
 		symptom(short_period_symptoms).
 
@@ -79,7 +79,7 @@ symptom(feeling_cold) :- \+ has_not(feeling_cold), write('Do you often feel cold
 			Reply='y'.
 
 symptom(headache) :- has(headache),!.
-symptom(headache) :- \+ has_not(headache), write('Do you have a headache (y/n) ?'),
+symptom(headache) :- \+ has_not(headache), write('Do you have a head-ache (y/n) ?'),
 			read(Reply),addKnowledge(headache,Reply),
 			Reply='y'.
 
